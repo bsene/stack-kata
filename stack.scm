@@ -21,8 +21,8 @@
 
 (define (push-bounded value stack) 
   (if (= (length (car stack)) (cdr stack)) 
-  (error "stackoverflow!")
-  (cons  
+    (error "stackoverflow!")
+    (cons  
      (cons value (car stack))
      (cdr stack))))
 
@@ -34,6 +34,8 @@
 (define (pop stack) 
   (if (null? stack)
     (error "stackunderflow!")
-    (cons (cdr (car stack)) (cdr stack))))
+    (cons 
+     (car (car stack))
+     (cons (cdr (car stack)) (cdr stack)))))
 
-(define (peek stack) (error "stackunderflow!"))
+(define (peek stack) (if (empty stack) (error "stackunderflow!") (cons (car (car stack)) stack)))

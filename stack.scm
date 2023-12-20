@@ -1,24 +1,30 @@
 (define null '())
 
+(define (empty-bounded stack) (= 0 (length (car stack))))
+
 (define (empty stack) 
-  (if (pair? stack)
-    (empty (car stack))
-    (= 0 (length stack))))
+  (if (null? stack)
+    #t
+    (empty-bounded stack)))
+
+(define (size-bounded stack) (length (car stack)))
 
 (define (size stack) 
-  (if (pair? stack)
-    (length (car stack)) 
-    (length stack)))
+  (if (null? stack)
+    0
+    (size-bounded stack) ))
 
 (define (create-stack . capacity) 
   (if (null? capacity)
     null
-    (cons null capacity)))
+    (cons null (car capacity))))
 
 (define (push-bounded value stack) 
-(cons  
- (cons value (car stack))
-(cdr stack)))
+  (if (= (length (car stack)) (cdr stack)) 
+  (error "stackoverflow!")
+  (cons  
+     (cons value (car stack))
+     (cdr stack))))
 
 (define (push value stack) 
   (if (null? stack) 
